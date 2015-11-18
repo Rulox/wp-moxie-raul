@@ -96,7 +96,7 @@ class Movie_Post_Type {
      * @since 0.1.0
      */
     public function load_plugin_textdomain() {
-        $domain = self::PLUGIN_SLUG;
+        $domain = $this->cpt_name . 'plugin';
         $locale = apply_filters( 'plugin_locale', get_locale(), $domain );
         load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
         load_plugin_textdomain( $domain, FALSE, dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages' );

@@ -47,8 +47,9 @@ class Wp_Moxie_Raul {
         $this->plugin_name = 'wp-moxie-raul';
         $this->version = '1.0.0';
         $this->load_dependencies();
+        $this->register_post_types();
         $this->set_locale();
-        //$this->define_admin_hooks();
+        $this->define_admin_hooks();
         //$this->define_public_hooks();
     }
 
@@ -70,10 +71,16 @@ class Wp_Moxie_Raul {
      */
     private function load_dependencies() {
         /**
+         * The class responsible for the Custom Post Type of the core plugin
+         */
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-moxie-raul-cpt.php';
+
+        /**
          * The class responsible for orchestrating the actions and filters of the
          * core plugin.
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-moxie-raul-loader.php';
+
         /**
          * The class responsible for defining internationalization functionality
          * of the plugin.
@@ -83,7 +90,8 @@ class Wp_Moxie_Raul {
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-        //require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-moxie-raul-admin.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-moxie-raul-admin.php';
+
         /**
          * The class responsible for defining all actions that occur in the public-facing
          * side of the site.
@@ -130,6 +138,17 @@ class Wp_Moxie_Raul {
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
     }
+
+    /**
+     * Registers the Movie Post Type
+     *
+     * @since   1.0.0
+     * @access  private
+     */
+    private function register_post_types() {
+        $movie = new Movie_Post_Type('Movie');
+    }
+
     /**
      * Run the loader to execute all of the hooks with WordPress.
      *
