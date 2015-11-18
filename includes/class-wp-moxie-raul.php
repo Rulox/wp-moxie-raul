@@ -48,8 +48,8 @@ class Wp_Moxie_Raul {
         $this->version = '1.0.0';
         $this->load_dependencies();
         $this->set_locale();
-        $this->define_admin_hooks();
-        $this->define_public_hooks();
+        //$this->define_admin_hooks();
+        //$this->define_public_hooks();
     }
 
     /**
@@ -79,15 +79,17 @@ class Wp_Moxie_Raul {
          * of the plugin.
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-moxie-raul-i18n.php';
+
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-moxie-raul-admin.php';
+        //require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-moxie-raul-admin.php';
         /**
          * The class responsible for defining all actions that occur in the public-facing
          * side of the site.
          */
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-moxie-raul-public.php';
+        //require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-moxie-raul-public.php';
+
         $this->loader = new Wp_Moxie_Raul_Loader();
     }
     /**
@@ -150,7 +152,7 @@ class Wp_Moxie_Raul {
      * The reference to the class that orchestrates the hooks with the plugin.
      *
      * @since     1.0.0
-     * @return    Plugin_Name_Loader    Orchestrates the hooks of the plugin.
+     * @return    Wp_Moxie_Raul_Loader    Orchestrates the hooks of the plugin.
      */
     public function get_loader() {
         return $this->loader;

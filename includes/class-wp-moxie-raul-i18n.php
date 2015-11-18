@@ -10,7 +10,7 @@
  * @subpackage Wp_Moxie_Raul/includes
  * @author     Raul Marrero
  */
-class Plugin_Name_i18n {
+class Wp_Moxie_Raul_i18n {
     /**
      * The domain specified for this plugin.
      *
