@@ -47,6 +47,6 @@ class Wp_Moxie_Raul_Admin {
     public function enqueue_scripts() {
 
     }
-    
+
 
 }

@@ -41,7 +41,6 @@ class Movie_Post_Type {
         // Call the register_post_type function when init
         add_action( 'init', array( $this, 'register_post_type' ) );
 
-        //$this->save();
     }
 
     public function register_post_type() {
@@ -87,6 +86,73 @@ class Movie_Post_Type {
         // Register the CPT
         register_post_type($this->cpt_name, $args);
 
+        // Manually adds MetaBoxes for Year and Rate
+        add_action( 'add_meta_boxes', array($this, 'add_movie_meta_boxes'));
+
+        // Performs actions when the Movie is being saved
+        add_action('save_post', array($this, 'save_post_metaboxes'), 10, 2);
+    }
+
+    /**
+     *  Manually renders the custom fields for our CPT post
+     */
+    public function add_movie_meta_boxes() {
+        $post_type = $this->cpt_name;
+
+        add_meta_box(
+            'movie_year',
+            __('Year'),
+            function($movie) {
+                // Get the year of the current Movie (if editing)
+                $movie_year = esc_html(get_post_meta($movie->ID, 'movie_year', true));
+                echo '<p>';
+                echo    '<input class="widefat" type="text" name="movie_year" value="'. $movie_year .'" id="movie_year" size="4" />';
+                echo '</p>';
+            },
+            $post_type,
+            'side',
+            'default'
+        );
+
+        add_meta_box(
+            'movie_rating',
+            __('Rating'),
+            function($movie) {
+                // Get the rating of the current Movie (if editing)
+                $movie_rating = esc_html(get_post_meta($movie->ID, 'movie_rating', true));
+                echo '<p>';
+                echo    '<select name="movie_rating" id="movie_rating">';
+                for ($rating = 5; $rating >= 1; $rating --) {
+                    echo '<option '. selected($rating, $movie_rating) . ' value="' . $rating . '">' . $rating . '</option>';
+                }
+                echo    '</select>';
+                echo '</p>';
+            },
+            $post_type,
+            'side',
+            'default'
+        );
+    }
+
+    public function save_post_metaboxes($movie_id, $movie) {
+        $ctp_type = strtolower($this->cpt_name);
+
+        // We check if the current user has permissions to save/edit the Movie
+        if(!current_user_can("edit_post", $movie_id))
+            return $movie_id;
+
+        if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+            return $movie_id;
+
+        if ( $movie->post_type == $ctp_type ) {
+            // Store data in post meta table if present in post data
+            if ( isset( $_POST['movie_year'] ) && $_POST['movie_year'] != '' ) {
+                update_post_meta( $movie_id, 'movie_year', $_POST['movie_year'] );
+            }
+            if ( isset( $_POST['movie_rating'] ) && $_POST['movie_rating'] != '' ) {
+                update_post_meta( $movie_id, 'movie_rating', $_POST['movie_rating'] );
+            }
+        }
     }
 
 
