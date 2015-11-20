@@ -71,6 +71,13 @@ class Wp_Moxie_Raul_Public {
             false
         );
 
+        wp_enqueue_style(
+            $this->plugin_name . '-animate',
+            plugin_dir_url( __FILE__ ) . 'css/animate.css',
+            array(),
+            $this->version,
+            false
+        );
 
     }
     /**
@@ -129,14 +136,6 @@ class Wp_Moxie_Raul_Public {
             $this->version,
             false
         );
-/*
-        wp_enqueue_script(
-            $this->plugin_name . 'app',
-            plugin_dir_url( __FILE__ ) . 'js/app.js',
-            array(),
-            $this->version,
-            false
-        );*/
     }
 
     /**

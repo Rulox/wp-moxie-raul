@@ -46,8 +46,8 @@ var MovieList = React.createClass({
                     this.state.data.map((movie) => {
                         return(
                             <div key={movie.id}>
-                                <div className="col-sm-12 movie">
-                                    <div className="poster col-sm-4 col-xs-12 thumbnail">
+                                <div className="col-sm-12 movie animated fadeIn">
+                                    <div className="poster col-sm-4 col-xs-12 thumbnail animated bounceIn">
                                         <img src={movie.poster_url} alt={movie.title}/>
                                     </div>
                                     <div className="description col-sm-8 col-xs-12">
