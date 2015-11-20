@@ -129,14 +129,14 @@ class Wp_Moxie_Raul_Public {
             $this->version,
             false
         );
-
+/*
         wp_enqueue_script(
             $this->plugin_name . 'app',
             plugin_dir_url( __FILE__ ) . 'js/app.js',
             array(),
             $this->version,
             false
-        );
+        );*/
     }
 
     /**

@@ -4,6 +4,8 @@
         <base href="<?php $url_info = parse_url( home_url() ); echo trailingslashit( $url_info['path'] ); ?>">
         <title>Home | Movie List</title>
         <?php wp_head(); ?>
+        <!-- We need to load app.js script manually (ReactJS) -->
+        <script type="text/babel" src="./wp-content/plugins/wp-moxie-raul/public/js/app.js"></script>
     </head>
 
         <body>

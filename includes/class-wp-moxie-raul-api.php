@@ -43,14 +43,14 @@ class Movie_Endpoint {
                 $data[] = array(
                     'id' => $id,
                     'title' => $post->post_title,
-                    'poster_url' => wp_get_attachment_image_src(get_post_thumbnail_id($id))[0],
+                    'poster_url' => wp_get_attachment_image_src(get_post_thumbnail_id($id), 'full')[0],
                     'short_description' => $post->post_content,
                     'year' => get_post_meta($id, 'movie_year')[0],
                     'rating' => get_post_meta($id, 'movie_rating')[0]
                 );
                 wp_reset_postdata();
             }
-
+            header('HTTP/1.1 200 OK');
             wp_send_json($data);
         }
     }
