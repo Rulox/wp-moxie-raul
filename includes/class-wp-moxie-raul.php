@@ -51,6 +51,8 @@ class Wp_Moxie_Raul {
         $this->set_locale();
         $this->define_admin_hooks();
         //$this->define_public_hooks();
+
+        add_action('init', array($this, 'load_api'));
     }
 
     /**
@@ -88,6 +90,11 @@ class Wp_Moxie_Raul {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-wp-moxie-raul-i18n.php';
 
         /**
+         * The class for the API JSON endpoint
+         */
+        require_once plugin_dir_path( dirname(__FILE__) ) . 'includes/class-wp-moxie-raul-api.php';
+
+        /**
          * The class responsible for defining all actions that occur in the admin area.
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-wp-moxie-raul-admin.php';
@@ -100,6 +107,14 @@ class Wp_Moxie_Raul {
 
         $this->loader = new Wp_Moxie_Raul_Loader();
     }
+
+    /**
+     * Load API endpoint for Movies
+     */
+    public function load_api() {
+        $api = new Movie_Endpoint();
+    }
+
     /**
      * Define the locale for this plugin for internationalization.
      *
