@@ -50,7 +50,7 @@ class Wp_Moxie_Raul {
         $this->register_post_types();
         $this->set_locale();
         $this->define_admin_hooks();
-        //$this->define_public_hooks();
+        $this->define_public_hooks();
 
         add_action('init', array($this, 'load_api'));
     }
@@ -103,7 +103,7 @@ class Wp_Moxie_Raul {
          * The class responsible for defining all actions that occur in the public-facing
          * side of the site.
          */
-        //require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-moxie-raul-public.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-wp-moxie-raul-public.php';
 
         $this->loader = new Wp_Moxie_Raul_Loader();
     }
@@ -150,6 +150,7 @@ class Wp_Moxie_Raul {
      */
     private function define_public_hooks() {
         $plugin_public = new Wp_Moxie_Raul_Public( $this->get_plugin_name(), $this->get_version() );
+        $this->loader->add_filter( 'template_include', $plugin_public, 'replace_home_page' );
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
     }
